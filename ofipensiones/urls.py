@@ -25,4 +25,5 @@ urlpatterns = [
     path('index/', views.index),
     path('pagos_pendientes/<str:codigo_estudiante>/', pagos_pendientes, name='pagos_pendientes'),
     path('estado_de_cuenta/<int:num_id_estudiante>/', estado_de_cuenta, name='estado_de_cuenta'),
+    path('health-check/', views.healthCheck),
 ]

@@ -17,3 +17,6 @@ def pagos_pendientes(request, codigo_estudiante):
     
 def estado_de_cuenta(request, num_id_estudiante):
    return estado_de_cuentaa(request, num_id_estudiante)
+
+def healthCheck(request):
+    return HttpResponse('ok')
