@@ -17,16 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from . import views
-from .views import pagos_pendientes, estado_de_cuenta, agregar_estudiante, crear_cuenta, crear_pago
+from .views import pagos_pendientes, agregar_estudiante, crear_cuenta, crear_pago
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', views.home),
     path('index/', views.index),
     path('pagos_pendientes/<str:codigo_estudiante>/', pagos_pendientes, name='pagos_pendientes'),
-    path('estado_de_cuenta/<int:num_id_estudiante>/', estado_de_cuenta, name='estado_de_cuenta'),
     path('health-check/', views.healthCheck),
     path('agregar-estudiante/', agregar_estudiante, name='agregar_estudiante'),
-     path('crear-cuenta/', crear_cuenta, name='crear_cuenta'),
-     path('crear-pago/', crear_pago, name='crear_pago'),
+    path('crear-cuenta/', crear_cuenta, name='crear_cuenta'),
+    path('crear-pago/', crear_pago, name='crear_pago'),
+    path('reporte-estudiante/<int:numId>/', views.generar_reporte_estudiante, name='reporte_estudiante'),
 ]

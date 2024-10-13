@@ -1,8 +1,7 @@
-from django.shortcuts import render, get_object_or_404
-from pago.models import Pago
+from django.shortcuts import render, get_object_or_404, redirect
 from estudiante.models import Estudiante
 from cuenta.models import Cuenta
-from datetime import date
+from pago.forms import PagoForm
 
 def pagos_pendientess(request, codigo_estudiante):
     # Obtener el estudiante por su código
@@ -20,3 +19,13 @@ def pagos_pendientess(request, codigo_estudiante):
         'cuenta': cuenta,
         'pagos_pendientes': pagos_pendientes
     })
+    
+def crear_pagoo(request):
+    if request.method == 'POST':
+        form = PagoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/index')  # Redirigir a una página de éxito o lista de pagos
+    else:
+        form = PagoForm()
+    return render(request, 'crear_pago.html', {'form': form})
