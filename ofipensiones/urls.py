@@ -21,7 +21,7 @@ from .views import pagos_pendientes, agregar_estudiante, crear_cuenta, crear_pag
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/', views.home),
+    path('', views.home),
     path('index/', views.index),
     path('pagos_pendientes/<str:codigo_estudiante>/', pagos_pendientes, name='pagos_pendientes'),
     path('health-check/', views.healthCheck),
