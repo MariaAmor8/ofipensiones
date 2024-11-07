@@ -1,31 +1,47 @@
 _format_version: "2.1"
 
 services:
+  - host: monitoring_upstream
+    name: monitoring_service
+    protocol: http
+    routes:
+      
+      - name: monitoring
+        paths:
+          - /
+        strip_path: false
+
   - host: alarms_upstream
     name: alarms_service
     protocol: http
     routes:
+      
       - name: alarms
         paths:
-          - /alarms
-          - /alarmsValidate/
+          - /
         strip_path: false
     
 upstreams:
   - name: alarms_upstream
     targets:
-      - target: <ip-privada-alarms-app-a>:8080
+      - target: 10.128.0.53:8080
         weight: 100
-      - target: <ip-privada-alarms-app-b>:8080
+      - target: 10.128.0.54:8080
         weight: 100
     healthchecks:
-      threshold: 50  # El servicio se considera en fallo si menos del 50% de las instancias están sanas
+      threshold: 0
       active:
         http_path: /health/
-        timeout: 1
+        timeout: 0
         healthy:
-          successes: 3   # Se considera saludable después de 3 respuestas exitosas
-          interval: 5    # Intervalo de 5 segundos entre health checks cuando está sano
+          successes: 0
+          interval: 0
         unhealthy:
-          tcp_failures: 1   # Una falla de TCP marca la instancia como no saludable
-          interval: 5       # Intervalo de 5 segundos entre health checks cuando está en fallo
+          tcp_failures: 0
+          interval: 0
+
+  - name: monitoring_upstream
+    targets:
+      - target: 10.128.0.56:8080
+        weight: 100
+

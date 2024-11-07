@@ -24,7 +24,7 @@ urlpatterns = [
     path('', views.home),
     path('index/', views.index),
     path('pagos_pendientes/<str:codigo_estudiante>/', pagos_pendientes, name='pagos_pendientes'),
-    path('health-check/', views.healthCheck),
+    path('health/', views.healthCheck),
     path('agregar-estudiante/', agregar_estudiante, name='agregar_estudiante'),
     path('crear-cuenta/', crear_cuenta, name='crear_cuenta'),
     path('crear-pago/', crear_pago, name='crear_pago'),
