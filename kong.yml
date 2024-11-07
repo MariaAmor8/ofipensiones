@@ -29,16 +29,16 @@ upstreams:
       - target: 10.128.0.54:8080
         weight: 100
     healthchecks:
-      threshold: 0
+      threshold: 50
       active:
         http_path: /health/
-        timeout: 0
-        healthy:
-          successes: 0
-          interval: 0
+        timeout: 1
+        healthy: 
+          successes: 3
+          interval: 5
         unhealthy:
-          tcp_failures: 0
-          interval: 0
+          tcp_failures: 1
+          interval: 5
 
   - name: monitoring_upstream
     targets:
