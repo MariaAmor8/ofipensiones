@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'estudiante',
     'reporte',
     'pago',
-    'cuenta'
+    'cuenta',
+    #'social_django'
 ]
 
 MIDDLEWARE = [
@@ -84,8 +85,9 @@ DATABASES = {
         'NAME': 'ofipensiones',
         "USER": 'usuarioo',
         "PASSWORD": 'Kageyama27',
-        "HOST": "10.128.0.52",
-        "PORT": "",
+        "HOST": "localhost",
+        "PORT": "5432",
+        #5432
     }
 }
 
@@ -137,3 +139,13 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'arquisoft2019@gmail.com'
 EMAIL_HOST_PASSWORD = 'xxxxxxxxx'
+
+LOGIN_URL = "/login/auth0" 
+LOGIN_REDIRECT_URL = "/" 
+LOGOUT_REDIRECT_URL = "https://dev-vx68xodgq7exbyat.us.auth0.com/v2/logout?returnTo=http%3A%2F%2Flocalhost:8080" 
+SOCIAL_AUTH_TRAILING_SLASH = False # Remove end slash from routes 
+SOCIAL_AUTH_AUTH0_DOMAIN = 'dev-vx68xodgq7exbyat.us.auth0.com' 
+SOCIAL_AUTH_AUTH0_KEY = 'Z4XBIl8s0JtMMjDPQY4JEJUidjpvKPo6' 
+SOCIAL_AUTH_AUTH0_SECRET = 'XCCpIdfczkBlkLBROC3fVuUxCdGi9dxYVUD00609iVmNzjDoTsecsJPHs6Ggs6Lv' 
+SOCIAL_AUTH_AUTH0_SCOPE = [ 'openid', 'profile','email','role',] 
+AUTHENTICATION_BACKENDS = { 'ofipensiones.auth0backend.Auth0', 'django.contrib.auth.backends.ModelBackend', }

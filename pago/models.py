@@ -35,3 +35,6 @@ class Pago(models.Model):
         choices=MESES,
         default='01',  # Opción predeterminada (por ejemplo, 'Enero')
     )
+    
+    def __str__(self):
+        return self.causacion+" - "+ str(self.valor)
