@@ -1,11 +1,13 @@
 #from django.http import HttpResponse
 from django.shortcuts import render
+from django.http import HttpResponse
 from pago.logic.pago_logic import pagos_pendientess
 from estudiante.logic.logic_estudiante import agregar_estudiantee, asociar_pagos_a_cuenta
 from cuenta.logic.cuenta_logic import crear_cuentaa
 from pago.logic.pago_logic import crear_pagoo, modificar_pago
 from reporte.logic.reporte_logic import generar_reporte_estudiantee
 from django.http import JsonResponse
+from ofipensiones.auth0backend import getRole
 
 def home(request):
     return render(request, "home.html")
@@ -13,8 +15,13 @@ def home(request):
 def index(request):
     return render(request, "index.html")
 
+#@login_required
 def pagos_pendientes(request, codigo_estudiante):
+    #role = getRole(request)
+    #if role == "Padre familia":
     return pagos_pendientess(request, codigo_estudiante)
+    #else:
+        #return HttpResponse("Unauthorized User")
       
 def healthCheck(request):
     return JsonResponse({'message': 'OK'}, status=200)
