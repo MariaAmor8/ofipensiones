@@ -7,7 +7,7 @@ from cuenta.logic.cuenta_logic import crear_cuentaa
 from pago.logic.pago_logic import crear_pagoo, modificar_pago
 from reporte.logic.reporte_logic import generar_reporte_estudiantee
 from django.http import JsonResponse
-from ofipensiones.auth0backend import getRole
+from ofipensiones.auth0backend import getRole, getEmail
 from estudiante.models import Estudiante
 from django.contrib.auth.decorators import login_required
 
@@ -22,7 +22,13 @@ def pagos_pendientes(request, codigo_estudiante):
     role = getRole(request)
     #solo un padre de familia puede ver los pagos pendientes de su hijo - funciona
     if role == "Padre familia":
-        return pagos_pendientess(request, codigo_estudiante)
+        emailUsuario = getEmail(request)
+        estudiante = Estudiante.objects.get(numId=codigo_estudiante)
+        emailPadreFam = estudiante.emailPadreFamilia
+        if(emailUsuario==emailPadreFam):
+            return pagos_pendientess(request, codigo_estudiante)
+        else:
+           return render(request, 'error.html') 
     else:
         return render(request, 'error.html')
       
@@ -73,7 +79,7 @@ def homePagosPendientes(request):
 @login_required
 def lista_estudiantes(request):
     role = getRole(request)
-    if role == "Padre familia":
+    if role == "Administrador":
         estudiantes = Estudiante.objects.all()
         return render(request, 'listaEstudiantes.html', {'estudiantes': estudiantes})
     else:
