@@ -20,6 +20,7 @@ def index(request):
 @login_required
 def pagos_pendientes(request, codigo_estudiante):
     role = getRole(request)
+    #solo un padre de familia puede ver los pagos pendientes de su hijo
     if role == "Padre familia":
         return pagos_pendientess(request, codigo_estudiante)
     else:
@@ -42,13 +43,19 @@ def crear_pago(request):
 def generar_reporte_estudiante(request, numId):
    return generar_reporte_estudiantee(request,numId)
 
-@login_required
+@login_required 
 def asociar_pago_a_cuenta(request, numId):
-    return asociar_pagos_a_cuenta(request, numId)
+    role = getRole(request)
+    #solo el administrador puede asociar un pago a una cuenta de un estudiante
+    if role == "Administrador": 
+        return asociar_pagos_a_cuenta(request, numId)
+    else:
+        return HttpResponse("Unauthorized User")
 
 @login_required
 def modificar_pagos(request, pago_id, codigo_estudiante):
     role = getRole(request)
+    #solo el administrador modificar un pago
     if role == "Administrador":
         return modificar_pago(request, pago_id, codigo_estudiante)
     else:
