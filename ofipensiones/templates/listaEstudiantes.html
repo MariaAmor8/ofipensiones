@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>Lista de Estudiantes - Ofipensiones</title>
+    <style>
+        .container {
+            margin-top: 50px;
+        }
+        h2 {
+            color: #00000;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        .table {
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .table th {
+            background-color: #004080;
+            color: white;
+            text-align: center;
+        }
+        .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .btn-primary {
+            background-color: #0066cc;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #004080;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="text-center">Lista de Estudiantes</h2>
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Número de Identificación</th>
+                    <th>Teléfono</th>
+                    <th>Colegio</th>
+                    <th>Carnet</th>
+                    <th>Grado</th>
+                    <th>Curso</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for estudiante in estudiantes %}
+                <tr>
+                    <td>{{ estudiante.nombre }}</td>
+                    <td>{{ estudiante.numId }}</td>
+                    <td>{{ estudiante.telefono }}</td>
+                    <td>{{ estudiante.colegio }}</td>
+                    <td>{{ estudiante.carnet }}</td>
+                    <td>{{ estudiante.grado }}</td>
+                    <td>{{ estudiante.curso }}</td>
+                    <td>
+                        <a href="{% url 'asociar_pagos_a_cuenta' estudiante.numId %}" class="btn btn-primary btn-sm">
+                            Asociar Pagos
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -97,6 +97,7 @@ resources:
       accessConfigs:
       - name: External NAT
         type: ONE_TO_ONE_NAT
+        natIP: 34.172.81.103
     tags:
       items: 
       - authd-django

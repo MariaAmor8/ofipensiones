@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from . import views
-from .views import pagos_pendientes, agregar_estudiante, crear_cuenta, crear_pago
+from .views import pagos_pendientes, agregar_estudiante, crear_cuenta, crear_pago, lista_estudiantes
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,6 +32,8 @@ urlpatterns = [
     path('asociar-pagos/<int:numId>/', views.asociar_pago_a_cuenta, name='asociar_pagos_a_cuenta'),
     path('modificar-pago/<int:pago_id>/<str:codigo_estudiante>/', views.modificar_pago, name='modificar_pago'),
     path(r'', include('django.contrib.auth.urls')),
-    #path(r'', include('social_django.urls')),
+    path('homePagosPendientes', views.homePagosPendientes, name="Home pagos pendientes"),
+    path('listaEstudiantes', views.lista_estudiantes, name="Lista Estudiantes"),
+    path(r'', include('social_django.urls')),
 
 ]

@@ -9,6 +9,7 @@ class Estudiante(models.Model):
     carnet = models.CharField(max_length=50, default=None)
     grado = models.CharField(max_length=100, default=None)
     curso = models.CharField(max_length=100, default=None)
+    #idPadreFamilia = models.IntegerField(default=None)
     
     def __str__(self):
         return '{}'.format(self.nombre)

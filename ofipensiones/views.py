@@ -8,6 +8,7 @@ from pago.logic.pago_logic import crear_pagoo, modificar_pago
 from reporte.logic.reporte_logic import generar_reporte_estudiantee
 from django.http import JsonResponse
 from ofipensiones.auth0backend import getRole
+from estudiante.models import Estudiante
 
 def home(request):
     return render(request, "home.html")
@@ -43,5 +44,17 @@ def generar_reporte_estudiante(request, numId):
 def asociar_pago_a_cuenta(request, numId):
     return asociar_pagos_a_cuenta(request, numId)
 
+#@login_required
 def modificar_pagos(request, pago_id, codigo_estudiante):
+    #role = getRole(request)
+    #if role == "Administrador":
     return modificar_pago(request, pago_id, codigo_estudiante)
+    #else:
+        #return HttpResponse("Unauthorized User")
+        
+def homePagosPendientes(request):
+    return render(request, "homePagosPendientes.html")
+
+def lista_estudiantes(request):
+    estudiantes = Estudiante.objects.all()
+    return render(request, 'listaEstudiantes.html', {'estudiantes': estudiantes})

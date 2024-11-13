@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>Ofipensiones - Pagos Pendientes</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="text-center">Consultar Pagos Pendientes</h2>
+        <form id="consultaForm" class="mt-4" onsubmit="redirectToPagosPendientes(event)">
+            <div class="form-group">
+                <label for="codigoEstudiante">Número de Identificación del Estudiante:</label>
+                <input type="text" class="form-control" id="codigoEstudiante" name="codigoEstudiante" placeholder="Ingresa el código del estudiante" required>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Consultar</button>
+        </form>
+    </div>
+
+    <script>
+        function redirectToPagosPendientes(event) {
+            event.preventDefault(); 
+            const codigoEstudiante = document.getElementById('codigoEstudiante').value;
+            window.location.href = `/pagos_pendientes/${codigoEstudiante}/`;
+        }
+    </script>
+{% endblock %}
