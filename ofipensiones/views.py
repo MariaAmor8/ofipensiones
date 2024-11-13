@@ -20,11 +20,11 @@ def index(request):
 @login_required
 def pagos_pendientes(request, codigo_estudiante):
     role = getRole(request)
-    #solo un padre de familia puede ver los pagos pendientes de su hijo
+    #solo un padre de familia puede ver los pagos pendientes de su hijo - funciona
     if role == "Padre familia":
         return pagos_pendientess(request, codigo_estudiante)
     else:
-        return HttpResponse("Unauthorized User")
+        return render(request, 'error.html')
       
 def healthCheck(request):
     return JsonResponse({'message': 'OK'}, status=200)
@@ -46,26 +46,36 @@ def generar_reporte_estudiante(request, numId):
 @login_required 
 def asociar_pago_a_cuenta(request, numId):
     role = getRole(request)
-    #solo el administrador puede asociar un pago a una cuenta de un estudiante
+    #solo el administrador puede asociar un pago a una cuenta de un estudiante - funciona
     if role == "Administrador": 
         return asociar_pagos_a_cuenta(request, numId)
     else:
-        return HttpResponse("Unauthorized User")
+        return render(request, 'error.html')
 
 @login_required
 def modificar_pagos(request, pago_id, codigo_estudiante):
     role = getRole(request)
-    #solo el administrador modificar un pago
+    #solo el administrador modificar un pago - no funciona
     if role == "Administrador":
         return modificar_pago(request, pago_id, codigo_estudiante)
     else:
-        return HttpResponse("Unauthorized User")
+        return render(request, 'error.html')
  
 @login_required       
 def homePagosPendientes(request):
-    return render(request, "homePagosPendientes.html")
+    role = getRole(request)
+    #solo el administrador modificar un pago - no funciona
+    if role == "Padre familia":
+        return render(request, "homePagosPendientes.html")
+    else:
+        return render(request, 'error.html')
 
 @login_required
 def lista_estudiantes(request):
-    estudiantes = Estudiante.objects.all()
-    return render(request, 'listaEstudiantes.html', {'estudiantes': estudiantes})
+    role = getRole(request)
+    if role == "Padre familia":
+        estudiantes = Estudiante.objects.all()
+        return render(request, 'listaEstudiantes.html', {'estudiantes': estudiantes})
+    else:
+        return render(request, 'error.html')
+    
