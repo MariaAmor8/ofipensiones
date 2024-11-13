@@ -39,7 +39,7 @@ def modificar_pago(request, pago_id, codigo_estudiante):
         form = PagoForm(request.POST, instance=pago)
         if form.is_valid():
             form.save()  # Guarda los cambios del pago
-            return redirect('pagos_pendientes', codigo_estudiante=codigo_estudiante)  # Redirige a pagos_pendientes con el código de estudiante
+            return redirect(f'/pagos_pendientes/?codigo_estudiante={codigo_estudiante}') # Redirige a pagos_pendientes con el código de estudiante
     else:
         form = PagoForm(instance=pago)  # Carga el formulario con los datos actuales del pago
     
