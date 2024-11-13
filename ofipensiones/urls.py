@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from . import views
 from .views import pagos_pendientes, agregar_estudiante, crear_cuenta, crear_pago, lista_estudiantes
+from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,7 +31,7 @@ urlpatterns = [
     path('crear-pago/', crear_pago, name='crear_pago'),
     path('reporte-estudiante/<int:numId>/', views.generar_reporte_estudiante, name='reporte_estudiante'),
     path('asociar-pagos/<int:numId>/', views.asociar_pago_a_cuenta, name='asociar_pagos_a_cuenta'),
-    path('modificar-pago/<int:pago_id>/<str:codigo_estudiante>/', views.modificar_pago, name='modificar_pago'),
+    path('modificar-pago/<int:pago_id>/<str:codigo_estudiante>/', csrf_exempt(views.modificar_pago), name='modificar_pago'),
     path(r'', include('django.contrib.auth.urls')),
     path('homePagosPendientes', views.homePagosPendientes, name="Home pagos pendientes"),
     path('listaEstudiantes', views.lista_estudiantes, name="Lista Estudiantes"),

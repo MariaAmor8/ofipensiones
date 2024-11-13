@@ -85,8 +85,8 @@ DATABASES = {
         'NAME': 'ofipensiones',
         "USER": 'usuarioo',
         "PASSWORD": 'Kageyama27',
-        "HOST": "localhost",
-        "PORT": "5432",
+        "HOST": "10.128.0.60",
+        "PORT": "",
         #5432
     }
 }
