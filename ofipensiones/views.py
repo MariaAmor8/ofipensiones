@@ -18,19 +18,22 @@ def index(request):
     return render(request, "index.html")
 
 @login_required
-def pagos_pendientes(request, codigo_estudiante):
+def pagos_pendientes(request):
     role = getRole(request)
-    #solo un padre de familia puede ver los pagos pendientes de su hijo - funciona
     if role == "Padre familia":
         emailUsuario = getEmail(request)
-        estudiante = Estudiante.objects.get(numId=codigo_estudiante)
-        emailPadreFam = estudiante.emailPadreFamilia
-        if(emailUsuario==emailPadreFam):
-            return pagos_pendientess(request, codigo_estudiante)
-        else:
-           return render(request, 'error.html') 
+        codigo_estudiante = request.GET.get('codigo_estudiante')  # Obtener el código desde GET
+        try:
+            estudiante = Estudiante.objects.get(numId=codigo_estudiante)
+            emailPadreFam = estudiante.emailPadreFamilia
+            if emailUsuario == emailPadreFam:
+                return pagos_pendientess(request, codigo_estudiante)
+            else:
+                return render(request, 'error.html')
+        except Estudiante.DoesNotExist:
+            return render(request, 'error.html', {'mensaje': 'Estudiante no encontrado'})
     else:
-        return render(request, 'error.html')
+        return render(request, 'error.html', {'mensaje': 'No autorizado'})
       
 def healthCheck(request):
     return JsonResponse({'message': 'OK'}, status=200)
