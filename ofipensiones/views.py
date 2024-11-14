@@ -20,13 +20,13 @@ def index(request):
 @login_required
 def pagos_pendientes(request):
     role = getRole(request)
-    if role == "Padre familia":
+    if role == "Padre familia" or role=="Administrador":
         emailUsuario = getEmail(request)
         codigo_estudiante = request.GET.get('codigo_estudiante')  # Obtener el código desde GET
         try:
             estudiante = Estudiante.objects.get(numId=codigo_estudiante)
             emailPadreFam = estudiante.emailPadreFamilia
-            if emailUsuario == emailPadreFam:
+            if emailUsuario == emailPadreFam or emailUsuario == "admin@gmail.com":
                 return pagos_pendientess(request, codigo_estudiante)
             else:
                 return render(request, 'error.html')
