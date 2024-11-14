@@ -74,7 +74,7 @@ def modificar_pagos(request, pago_id, codigo_estudiante):
 def homePagosPendientes(request):
     role = getRole(request)
     #solo el administrador modificar un pago - funciona
-    if role == "Padre familia":
+    if role == "Padre familia" or role=="Administrador":
         return render(request, "homePagosPendientes.html")
     else:
         return render(request, 'error.html')
